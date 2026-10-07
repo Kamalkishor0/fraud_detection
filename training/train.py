@@ -3,10 +3,10 @@ import joblib
 import os
 from pathlib import Path
 
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -37,10 +37,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # 4. Pipeline
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
-    ("model", LogisticRegression(
-        class_weight="balanced",
-        max_iter=1000
-    ))
+    ("model", RandomForestClassifier(random_state=42, n_estimators=100, class_weight='balanced', max_depth=10))
 ])
 
 # 5. Train
